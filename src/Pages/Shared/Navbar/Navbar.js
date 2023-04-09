@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../../Assets/Logo/3541037.jpg';
+import logo from '../../../Assets/Logo/logo.png';
 
 const Navbar = () => {
 
@@ -27,7 +27,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <Link to='/' className="normal-case text-xl text-black flex items-center">
-                        <img className='w-10 h-10' src={logo} alt="" /> <p className='ml-2 font-medium'>Perfume Inventory</p>
+                        <img className='w-52 lg:w-72' src={logo} alt="" />
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
