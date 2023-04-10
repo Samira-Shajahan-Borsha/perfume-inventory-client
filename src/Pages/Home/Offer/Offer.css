@@ -1,7 +1,7 @@
 /* Slow-motion Zoom Container */
 .img-hover-zoom--slowmo img {
-    transform-origin: 50% 65%;
-    transition: transform 0.3s, 1s ease;
+    /* transform-origin: 50% 65%; */
+    transition: transform 0.3s;
 }
 
 /* The Transformation */

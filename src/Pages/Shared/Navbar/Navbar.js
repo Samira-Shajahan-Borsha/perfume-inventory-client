@@ -1,17 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../Assets/Logo/logo.png';
 
 const Navbar = () => {
 
+    const activeRoute = ({ isActive }) => isActive ? "text-yellow-700 underline decoration-yellow-700 decoration-2 underline-offset-4" : "text-black hover:underline decoration-2 underline-offset-4";
+
+
     const menuItem = <>
-        <li><Link className='text-black'>Manage Inventory</Link></li>
+        <li><NavLink to='/manage/inventory' className={activeRoute}>Manage Inventory</NavLink></li>
         <li tabIndex={0}>
-            <Link className="justify-between text-black">
+            <NavLink to='/add/item' className={activeRoute}>
                 Add Item
-            </Link>
+            </NavLink>
         </li>
-        <li><Link className='text-black'>My items</Link></li>
+        <li><NavLink to='/my/items' className={activeRoute}>My items</NavLink></li>
     </>
 
     return (
@@ -31,7 +34,7 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
+                    <ul className="flex px-1 w-80 justify-evenly">
                         {menuItem}
                     </ul>
                 </div>
