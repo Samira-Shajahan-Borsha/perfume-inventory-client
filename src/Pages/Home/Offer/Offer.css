@@ -1,0 +1,11 @@
+/* Slow-motion Zoom Container */
+.img-hover-zoom--slowmo img {
+    transform-origin: 50% 65%;
+    transition: transform 0s, 1s ease-in;
+}
+
+/* The Transformation */
+.img-hover-zoom--slowmo:hover img {
+    transform: scale(1.04);
+    cursor: pointer;
+}

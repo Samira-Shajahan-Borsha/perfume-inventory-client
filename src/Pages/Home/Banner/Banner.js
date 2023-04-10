@@ -5,10 +5,10 @@ import '../Banner/Banner.css';
 
 const Banner = () => {
     return (
-        <div className="carousel w-full">
+        <div className="container mx-auto carousel ">
             <div id="slide1" className="carousel-item relative w-full">
                 <div className='carousel-image w-full'>
-                    <img src={backgroundImage} className="w-full max-h-screen" alt='' />
+                    <img src={backgroundImage} className="w-full max-h-screen" alt='backgroundImage' />
                 </div>
                 <div className="absolute flex justify-between transform -translate-y-1/2 left-10 right-0 top-1/2">
                     <div data-aos="fade-right" data-aos-duration="3000" className='lg:mt-20'>
