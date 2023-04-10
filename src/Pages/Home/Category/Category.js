@@ -9,7 +9,7 @@ const Category = () => {
         { id: 4, name: 'Woody Fragrances', description: "Woody fragrances often have a warm, earthy, and masculine scent and are commonly used in men's fragrances, but can also be found in women's fragrances." },
     ];
     return (
-        <div className='container w-full mx-auto my-8 lg:my-24 p-4'>
+        <div className='container w-full mx-auto pb-10 md:py-20 lg:py-20 px-4'>
             <p className='text-center text-yellow-700 font-bold text-lg italic'>Category</p>
             <h1 className='text-center capitalize text-2xl md:text-5xl lg:text-5xl font-medium my-4'>Fragrance Types</h1>
             <p className='text-center mb-4'>The stylish and organized cosmetic products</p>
