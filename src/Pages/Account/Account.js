@@ -1,11 +1,91 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
+import { AuthContext } from '../../Contexts/AuthProvider';
+import { BiErrorCircle } from 'react-icons/bi';
 
 const Account = () => {
 
+    const { createUser } = useContext(AuthContext);
+
     const [toggleButton, setToggleButton] = useState(true);
+
+    const [userInfo, setUserInfo] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    console.log(userInfo);
+
+    const [error, setError] = useState({
+        nameError: '',
+        emailError: '',
+        passwordError: '',
+        confirmPasswordError: ''
+    });
+
+    console.log(error);
+
+    const handleRegister = event => {
+
+        event.preventDefault();
+
+        const form = event.target;
+        const name = form.username.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const confirmPassword = form.confirmPassword.value;
+
+
+
+
+        /* createUser(email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                console.log(user);
+            })
+            .catch(error => {
+                console.error(error);
+            }) */
+
+
+        console.log(name, email, password, confirmPassword);
+    }
+
+    const handleNameBlur = (nameInput) => {
+        if (nameInput === '') {
+            setError({ ...error, nameError: 'Username is required' });
+        }
+        else {
+            setUserInfo({ ...userInfo, name: nameInput });
+            setError({ ...error, nameError: '' });
+        }
+    }
+
+
+    const handleEmailBlur = emailInput => {
+
+        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
+        if (emailInput === '') {
+            setError({ ...error, emailError: 'Email address is required.' });
+        }
+        else if (!regex.test(emailInput)) {
+            setError({ ...error, emailError: 'Please provide a valid email address.' });
+        }
+        else {
+            setUserInfo({ ...userInfo, email: emailInput })
+            setError({ ...error, emailError: '' });
+        }
+    }
+
+
+    /* const handlePasswordBlur = passwordInput => {
+
+    } */
 
     return (
         <div>
@@ -13,6 +93,24 @@ const Account = () => {
                 <h1 className='text-4xl md:text-6xl lg:text-6xl font-semibold text-white py-8 text-center'>My account</h1>
                 <p className='text-center text-white'><span className='hover:underline'><Link to='/'>Home</Link></span> / My account</p>
             </div>
+            {
+                error?.nameError &&
+                <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                    <div>
+                        <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
+                        <span>Error: {error?.nameError}</span>
+                    </div>
+                </div>
+            }
+            {
+                error?.emailError &&
+                <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                    <div>
+                        <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
+                        <span>Error: {error?.emailError}</span>
+                    </div>
+                </div>
+            }
             <div className="hero py-9">
                 <div className="hero-content px-4 lg:px-28 flex-col items-start justify-evenly lg:flex-row-reverse">
                     <div className="text-center lg:w-1/2 lg:text-left flex flex-col items-center ">
@@ -30,7 +128,12 @@ const Account = () => {
                         toggleButton ?
                             <Login></Login>
                             :
-                            <Register></Register>
+                            <Register
+                                handleRegister={handleRegister}
+                                handleNameBlur={handleNameBlur}
+                                handleEmailBlur={handleEmailBlur}
+                                handlePasswordBlur={handlePasswordBlur}
+                            ></Register>
                     }
                 </div>
             </div>
