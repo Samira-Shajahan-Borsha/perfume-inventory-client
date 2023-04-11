@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../Assets/Logo/logo.png';
+import { RxAvatar } from 'react-icons/rx';
 
 const Navbar = () => {
 
@@ -14,7 +15,7 @@ const Navbar = () => {
                 Add Item
             </NavLink>
         </li>
-        <li><NavLink to='/my/items' className={activeRoute}>My items</NavLink></li>
+        <li><NavLink to='/my/items' className={activeRoute}>My Items</NavLink></li>
     </>
 
     return (
@@ -39,7 +40,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end flex">
-                    <Link className="btn">Log In</Link>
+                    <Link to='/login' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
                 </div>
             </div>
         </div>

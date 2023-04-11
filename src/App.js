@@ -7,11 +7,13 @@ import './App.css';
 
 
 function App() {
+
   useEffect(() => {
     AOS.init();
   }, [])
+  
   return (
-    <div className=''>
+    <div className='text-black'>
       <RouterProvider router={router}></RouterProvider>
     </div>
   );
