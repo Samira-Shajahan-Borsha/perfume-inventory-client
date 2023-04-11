@@ -54,6 +54,8 @@ const Account = () => {
         console.log(name, email, password, confirmPassword);
     }
 
+    //registration form input field validation
+
     const handleNameBlur = (nameInput) => {
         if (nameInput === '') {
             setError({ ...error, nameError: 'Username is required' });
@@ -63,7 +65,6 @@ const Account = () => {
             setError({ ...error, nameError: '' });
         }
     }
-
 
     const handleEmailBlur = emailInput => {
 
@@ -81,26 +82,42 @@ const Account = () => {
         }
     }
 
-
     const handlePasswordBlur = passwordInput => {
         if (passwordInput === '') {
             setError({ ...error, passwordError: 'Please enter an account password.' });
+            setPasswordChange('');
         }
     }
 
     const handlePasswordChange = passwordInput => {
         if (passwordInput.length < 6) {
             setPasswordChange('Very weak - Please enter a stronger password.');
-            setError({ ...error, passwordError: '' });
+            setError({ ...error, passwordError: '', confirmPasswordError: '' });
+            setUserInfo({ ...userInfo, password: '' });
         }
         else if (passwordInput.length <= 8) {
             setPasswordChange('Medium');
-            setError({ ...error, passwordError: '' });
+            setError({ ...error, passwordError: '', confirmPasswordError: '' });
+            setUserInfo({ ...userInfo, password: passwordInput });
         }
         else if (passwordInput.length > 10) {
             setPasswordChange('Strong');
-            setError({ ...error, passwordError: '' });
+            setError({ ...error, passwordError: '', confirmPasswordError: '' });
             setUserInfo({ ...userInfo, password: passwordInput });
+        }
+    }
+
+
+    const handleConfirmPasswordBlur = confirmPasswordInput => {
+        if (confirmPasswordInput === '') {
+            setError({ ...error, confirmPasswordError: 'You need to confirm your password.' });
+        }
+        else if (confirmPasswordInput !== userInfo.password) {
+            setError({ ...error, confirmPasswordError: "Password don't match" });
+        }
+        else {
+            setError({ ...error, confirmPasswordError: '' });
+            setUserInfo({ ...userInfo, confirmPassword: confirmPasswordInput });
         }
     }
 
@@ -129,6 +146,11 @@ const Account = () => {
                                 <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
                                 <span>Error: {error?.passwordError}</span>
                             </div>
+                        </div> : error?.confirmPasswordError ? <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                            <div>
+                                <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
+                                <span>Error: {error?.confirmPasswordError}</span>
+                            </div>
                         </div> : <></>
             }
             <div className="hero py-9">
@@ -155,6 +177,7 @@ const Account = () => {
                                 handlePasswordBlur={handlePasswordBlur}
                                 handlePasswordChange={handlePasswordChange}
                                 passwordChange={passwordChange}
+                                handleConfirmPasswordBlur={handleConfirmPasswordBlur}
                             ></Register>
                     }
                 </div>
@@ -164,5 +187,3 @@ const Account = () => {
 };
 
 export default Account;
-
-

@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePasswordBlur, handlePasswordChange, passwordChange }) => {
-
-    console.log(passwordChange);
+const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePasswordBlur, handlePasswordChange, passwordChange, handleConfirmPasswordBlur }) => {
 
     const alertClassName = passwordChange.includes('Very weak') ? 'bg-yellow-700' : 'bg-green-700';
 
@@ -27,8 +25,9 @@ const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePassw
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input onChange={event => handlePasswordChange(event.target.value)} onBlur={event => handlePasswordBlur(event.target.value)} type="password" name='password' placeholder="Password" className="input input-bordered rounded text-sm" />
+                    <input onChange={event => handlePasswordChange(event.target.value)} onBlur={event => handlePasswordBlur(event.target.value)} type="password" name='password' placeholder="Password" className="input input-bordered rounded text-sm" required />
                     {
+                        passwordChange &&
                         <div className={`alert alert-warning rounded-none text-white text-sm shadow-lg w-full mx-auto mt-3 ${alertClassName}`}>
                             {passwordChange}
                         </div>
@@ -38,7 +37,7 @@ const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePassw
                     <label className="label">
                         <span className="label-text">Confirm Password</span>
                     </label>
-                    <input type="password" name='confirmPassword' placeholder="Confirm Password" className="input input-bordered rounded text-sm" />
+                    <input onBlur={event => handleConfirmPasswordBlur(event.target.value)} type="password" name='confirmPassword' placeholder="Confirm Password" className="input input-bordered rounded text-sm" required />
                 </div>
                 <div className="form-control mt-4">
                     <button type='submit' className="btn btn-primary border-0 rounded-none font-normal bg-black hover:bg-yellow-700" >REGISTER</button>
