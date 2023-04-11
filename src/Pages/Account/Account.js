@@ -11,14 +11,14 @@ const Account = () => {
 
     const [toggleButton, setToggleButton] = useState(true);
 
+    const [passwordChange, setPasswordChange] = useState('');
+
     const [userInfo, setUserInfo] = useState({
         name: '',
         email: '',
         password: '',
         confirmPassword: ''
     });
-
-    console.log(userInfo);
 
     const [error, setError] = useState({
         nameError: '',
@@ -27,9 +27,7 @@ const Account = () => {
         confirmPasswordError: ''
     });
 
-    const [passwordChange, setPasswordChange] = useState('');
-
-    console.log(error);
+    const errorMessage = error?.nameError || error?.emailError || error?.passwordError || error?.confirmPasswordError;
 
     const handleRegister = event => {
 
@@ -41,14 +39,17 @@ const Account = () => {
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
 
-        /* createUser(email, password)
+        createUser(email, password)
             .then(userCredential => {
                 const user = userCredential.user;
                 console.log(user);
             })
             .catch(error => {
-                console.error(error);
-            }) */
+                const errorMessage = error.message;
+                if (errorMessage.includes('auth/email-already-in-use')) {
+                    setError({ ...error, emailError: 'An account is already registered with your email address. Please Log in.' });
+                }
+            })
 
 
         console.log(name, email, password, confirmPassword);
@@ -128,30 +129,14 @@ const Account = () => {
                 <p className='text-center text-white'><span className='hover:underline'><Link to='/'>Home</Link></span> / My account</p>
             </div>
             {
-                error?.nameError ?
-                    <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
-                        <div>
-                            <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
-                            <span>Error: {error?.nameError}</span>
-                        </div>
+
+                errorMessage &&
+                <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                    <div>
+                        <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
+                        <span>Error: {errorMessage}</span>
                     </div>
-                    : error?.emailError ? <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
-                        <div>
-                            <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
-                            <span>Error: {error?.emailError}</span>
-                        </div>
-                    </div> : error?.passwordError ?
-                        <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
-                            <div>
-                                <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
-                                <span>Error: {error?.passwordError}</span>
-                            </div>
-                        </div> : error?.confirmPasswordError ? <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
-                            <div>
-                                <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
-                                <span>Error: {error?.confirmPasswordError}</span>
-                            </div>
-                        </div> : <></>
+                </div>
             }
             <div className="hero py-9">
                 <div className="hero-content px-4 lg:px-28 flex-col items-start justify-evenly lg:flex-row-reverse">
