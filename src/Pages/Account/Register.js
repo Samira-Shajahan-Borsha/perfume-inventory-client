@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePasswordBlur }) => {
+const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePasswordBlur, handlePasswordChange, passwordChange }) => {
+
+    console.log(passwordChange);
+
+    const alertClassName = passwordChange.includes('Very weak') ? 'bg-yellow-700' : 'bg-green-700';
 
     return (
 
@@ -23,7 +27,12 @@ const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePassw
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input onBlur={event => handlePasswordBlur(event.target.value)} type="password" name='password' placeholder="Password" className="input input-bordered rounded text-sm" />
+                    <input onChange={event => handlePasswordChange(event.target.value)} onBlur={event => handlePasswordBlur(event.target.value)} type="password" name='password' placeholder="Password" className="input input-bordered rounded text-sm" />
+                    {
+                        <div className={`alert alert-warning rounded-none text-white text-sm shadow-lg w-full mx-auto mt-3 ${alertClassName}`}>
+                            {passwordChange}
+                        </div>
+                    }
                 </div>
                 <div className="form-control mt-3">
                     <label className="label">

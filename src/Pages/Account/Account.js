@@ -27,6 +27,8 @@ const Account = () => {
         confirmPasswordError: ''
     });
 
+    const [passwordChange, setPasswordChange] = useState('');
+
     console.log(error);
 
     const handleRegister = event => {
@@ -38,9 +40,6 @@ const Account = () => {
         const email = form.email.value;
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
-
-
-
 
         /* createUser(email, password)
             .then(userCredential => {
@@ -83,9 +82,27 @@ const Account = () => {
     }
 
 
-    /* const handlePasswordBlur = passwordInput => {
+    const handlePasswordBlur = passwordInput => {
+        if (passwordInput === '') {
+            setError({ ...error, passwordError: 'Please enter an account password.' });
+        }
+    }
 
-    } */
+    const handlePasswordChange = passwordInput => {
+        if (passwordInput.length < 6) {
+            setPasswordChange('Very weak - Please enter a stronger password.');
+            setError({ ...error, passwordError: '' });
+        }
+        else if (passwordInput.length <= 8) {
+            setPasswordChange('Medium');
+            setError({ ...error, passwordError: '' });
+        }
+        else if (passwordInput.length > 10) {
+            setPasswordChange('Strong');
+            setError({ ...error, passwordError: '' });
+            setUserInfo({ ...userInfo, password: passwordInput });
+        }
+    }
 
     return (
         <div>
@@ -94,22 +111,25 @@ const Account = () => {
                 <p className='text-center text-white'><span className='hover:underline'><Link to='/'>Home</Link></span> / My account</p>
             </div>
             {
-                error?.nameError &&
-                <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
-                    <div>
-                        <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
-                        <span>Error: {error?.nameError}</span>
+                error?.nameError ?
+                    <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                        <div>
+                            <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
+                            <span>Error: {error?.nameError}</span>
+                        </div>
                     </div>
-                </div>
-            }
-            {
-                error?.emailError &&
-                <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
-                    <div>
-                        <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
-                        <span>Error: {error?.emailError}</span>
-                    </div>
-                </div>
+                    : error?.emailError ? <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                        <div>
+                            <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
+                            <span>Error: {error?.emailError}</span>
+                        </div>
+                    </div> : error?.passwordError ?
+                        <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                            <div>
+                                <BiErrorCircle className='text-lg mr-2 font-bold '></BiErrorCircle>
+                                <span>Error: {error?.passwordError}</span>
+                            </div>
+                        </div> : <></>
             }
             <div className="hero py-9">
                 <div className="hero-content px-4 lg:px-28 flex-col items-start justify-evenly lg:flex-row-reverse">
@@ -133,6 +153,8 @@ const Account = () => {
                                 handleNameBlur={handleNameBlur}
                                 handleEmailBlur={handleEmailBlur}
                                 handlePasswordBlur={handlePasswordBlur}
+                                handlePasswordChange={handlePasswordChange}
+                                passwordChange={passwordChange}
                             ></Register>
                     }
                 </div>
