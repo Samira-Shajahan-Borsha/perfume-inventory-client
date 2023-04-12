@@ -28,7 +28,9 @@ const Account = () => {
         confirmPasswordError: ''
     });
 
-    const errorMessage = error?.nameError || error?.emailError || error?.passwordError || error?.confirmPasswordError;
+    const RegistrationErrorMessage = error?.nameError || error?.emailError || error?.passwordError || error?.confirmPasswordError;
+
+    const loginErrorMessage = error?.emailError || error?.passwordError;
 
     const handleRegister = event => {
 
@@ -53,21 +55,27 @@ const Account = () => {
                     console.log(user);
                     user.displayName = name;
                     console.log(user.displayName);
-                    toast.success('Registered successfully. Please log in.')
+                    toast.success('Registered successfully. Please log in.');
+                    setPasswordChange('');
+                    setError({ ...error, emailError: '' });
                     form.reset();
                 })
                 .catch(error => {
                     const errorMessage = error.message;
                     if (errorMessage.includes('auth/email-already-in-use')) {
-                        setError({ ...error, emailError: 'An account is already registered with your email address. Please Log in.' });
+                        setError({ ...error, emailError: 'An account is already registered with your email address. Please try with different email.' });
                     }
                 })
         }
-
-        console.log(name, email, password, confirmPassword);
     }
 
-    //registration form input field validation
+    const handleLogin = event => {
+        event.preventDefault();
+
+        
+    }
+
+    //registration and login form input field validation
 
     const handleNameBlur = (nameInput) => {
         if (nameInput === '') {
@@ -95,10 +103,20 @@ const Account = () => {
         }
     }
 
-    const handlePasswordBlur = passwordInput => {
+    const registrationHandlePasswordBlur = passwordInput => {
         if (passwordInput === '') {
             setError({ ...error, passwordError: 'Please enter an account password.' });
             setPasswordChange('');
+        }
+    }
+
+    const loginHandlePasswordBlur = passwordInput => {
+        if (passwordInput === '') {
+            setError({ ...error, passwordError: 'The password field is empty' });
+        }
+        else {
+            setUserInfo({ ...userInfo, password: passwordInput });
+            setError({ ...error, passwordError: '' });
         }
     }
 
@@ -138,11 +156,20 @@ const Account = () => {
                 <p className='text-center text-white'><span className='hover:underline'><Link to='/'>Home</Link></span> / My account</p>
             </div>
             {
-                errorMessage &&
+                !toggleButton && RegistrationErrorMessage &&
                 <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
                     <div>
                         <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
-                        <span>Error: {errorMessage}</span>
+                        <span>Error: {RegistrationErrorMessage}</span>
+                    </div>
+                </div>
+            }
+            {
+                toggleButton && loginErrorMessage &&
+                <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
+                    <div>
+                        <BiErrorCircle className='text-lg mr-2 font-bold'></BiErrorCircle>
+                        <span>Error: {loginErrorMessage}</span>
                     </div>
                 </div>
             }
@@ -161,13 +188,17 @@ const Account = () => {
                     </div>
                     {
                         toggleButton ?
-                            <Login></Login>
+                            <Login
+                                handleLogin={handleLogin}
+                                handleEmailBlur={handleEmailBlur}
+                                loginHandlePasswordBlur={loginHandlePasswordBlur}
+                            ></Login>
                             :
                             <Register
                                 handleRegister={handleRegister}
                                 handleNameBlur={handleNameBlur}
                                 handleEmailBlur={handleEmailBlur}
-                                handlePasswordBlur={handlePasswordBlur}
+                                registrationHandlePasswordBlur={registrationHandlePasswordBlur}
                                 handlePasswordChange={handlePasswordChange}
                                 passwordChange={passwordChange}
                                 handleConfirmPasswordBlur={handleConfirmPasswordBlur}

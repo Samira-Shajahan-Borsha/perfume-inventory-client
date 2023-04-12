@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePasswordBlur, handlePasswordChange, passwordChange, handleConfirmPasswordBlur }) => {
+const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, registrationHandlePasswordBlur, handlePasswordChange, passwordChange, handleConfirmPasswordBlur }) => {
 
     const alertClassName = passwordChange.includes('Very weak') ? 'bg-yellow-700' : 'bg-green-700';
 
     return (
 
         < div className="lg:w-1/2 w-full lg:mr-8">
-            <h1 className="text-2xl mb-4 font-bold">Register</h1>
+            <h1 className="text-2xl uppercase mb-4 font-bold">Register</h1>
             <form onSubmit={handleRegister}>
                 <div className="form-control mt-3">
                     <label className="label">
@@ -25,7 +25,7 @@ const Register = ({ handleRegister, handleNameBlur, handleEmailBlur, handlePassw
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input onChange={event => handlePasswordChange(event.target.value)} onBlur={event => handlePasswordBlur(event.target.value)} type="password" name='password' placeholder="Password" className="input input-bordered rounded text-sm" required />
+                    <input onChange={event => handlePasswordChange(event.target.value)} onBlur={event => registrationHandlePasswordBlur(event.target.value)} type="password" name='password' placeholder="Password" className="input input-bordered rounded text-sm" required />
                     {
                         passwordChange &&
                         <div className={`alert alert-warning rounded-none text-white text-sm shadow-lg w-full mx-auto mt-3 ${alertClassName}`}>
