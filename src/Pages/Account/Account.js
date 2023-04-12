@@ -5,6 +5,11 @@ import Register from './Register';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { BiErrorCircle } from 'react-icons/bi';
 import { toast } from 'react-hot-toast';
+import { getAuth, updateProfile } from 'firebase/auth';
+import app from '../../Firebase/firebase.init';
+
+
+const auth = getAuth(app);
 
 const Account = () => {
 
@@ -53,10 +58,9 @@ const Account = () => {
                 .then(userCredential => {
                     const user = userCredential.user;
                     console.log(user);
-                    user.displayName = name;
-                    console.log(user.displayName);
-                    toast.success('Registered successfully. Please log in.', { id: 101 });
                     setPasswordChange('');
+                    updateUserProfile(name);
+                    toast.success('Registered successfully. Please log in.', { id: 101 });
                     setError({ ...error, emailError: '' });
                     form.reset();
                 })
@@ -97,6 +101,13 @@ const Account = () => {
                     setError({ ...error, passwordError: 'The password field is empty' });
                 }
             })
+    }
+
+    //update user profile 
+    const updateUserProfile = name => {
+        updateProfile(auth.currentUser, { displayName: name })
+            .then(() => { })
+            .catch(() => { })
     }
 
     //registration and login form input field validation
