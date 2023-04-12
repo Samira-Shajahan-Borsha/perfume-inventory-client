@@ -11,13 +11,13 @@ const Login = ({ handleLogin, handleEmailBlur, loginHandlePasswordBlur }) => {
                     <label className="label">
                         <span className="label-text">Email Address</span>
                     </label>
-                    <input onBlur={event => handleEmailBlur(event.target.value)} type="email" placeholder="Email" className="input input-bordered rounded text-sm" required />
+                    <input onBlur={event => handleEmailBlur(event.target.value)} name='email' type="email" placeholder="Email" className="input input-bordered rounded text-sm" required />
                 </div>
                 <div className="form-control mt-3">
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input onBlur={event => loginHandlePasswordBlur(event.target.value)} type="password" placeholder="Password" className="input input-bordered rounded text-sm" />
+                    <input onBlur={event => loginHandlePasswordBlur(event.target.value)} name='password' type="password" placeholder="Password" className="input input-bordered rounded text-sm" />
                     <label className="label">
                         <Link to='' className="label-text-alt link link-hover"><span className='hover:text-yellow-700'>Forgot password?</span></Link>
                     </label>

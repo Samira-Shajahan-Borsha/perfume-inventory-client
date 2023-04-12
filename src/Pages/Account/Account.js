@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 
 const Account = () => {
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, logInUser } = useContext(AuthContext);
 
     const [toggleButton, setToggleButton] = useState(true);
 
@@ -55,7 +55,7 @@ const Account = () => {
                     console.log(user);
                     user.displayName = name;
                     console.log(user.displayName);
-                    toast.success('Registered successfully. Please log in.');
+                    toast.success('Registered successfully. Please log in.', { id: 101 });
                     setPasswordChange('');
                     setError({ ...error, emailError: '' });
                     form.reset();
@@ -72,7 +72,31 @@ const Account = () => {
     const handleLogin = event => {
         event.preventDefault();
 
-        
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        logInUser(email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                console.log(user);
+                toast.success('User Logged in successfully.', { id: 102 });
+            })
+            .catch(error => {
+                console.error(error)
+                const errorMessage = error.message;
+                if (errorMessage.includes('auth/user-not-found')) {
+                    setError({ ...error, emailError: 'Unknown email address. Check again or try with your email.' });
+                    form.password.value = '';
+                }
+                if (errorMessage.includes('auth/wrong-password')) {
+                    setError({ ...error, passwordError: `The password you entered for the email address ${email} is incorrect.` });
+                    form.password.value = '';
+                }
+                if (errorMessage.includes('auth/missing-password')) {
+                    setError({ ...error, passwordError: 'The password field is empty' });
+                }
+            })
     }
 
     //registration and login form input field validation
