@@ -4,6 +4,7 @@ import Login from './Login';
 import Register from './Register';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { BiErrorCircle } from 'react-icons/bi';
+import { toast } from 'react-hot-toast';
 
 const Account = () => {
 
@@ -39,18 +40,29 @@ const Account = () => {
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
 
-        createUser(email, password)
-            .then(userCredential => {
-                const user = userCredential.user;
-                console.log(user);
-            })
-            .catch(error => {
-                const errorMessage = error.message;
-                if (errorMessage.includes('auth/email-already-in-use')) {
-                    setError({ ...error, emailError: 'An account is already registered with your email address. Please Log in.' });
-                }
-            })
 
+        if (password !== confirmPassword) {
+            setError({ ...error, confirmPasswordError: 'Failed registration. The confirm password should be matched with the given password.' });
+        }
+
+        else {
+            setError({ ...error, confirmPasswordError: "" });
+            createUser(email, password)
+                .then(userCredential => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    user.displayName = name;
+                    console.log(user.displayName);
+                    toast.success('Registered successfully. Please log in.')
+                    form.reset();
+                })
+                .catch(error => {
+                    const errorMessage = error.message;
+                    if (errorMessage.includes('auth/email-already-in-use')) {
+                        setError({ ...error, emailError: 'An account is already registered with your email address. Please Log in.' });
+                    }
+                })
+        }
 
         console.log(name, email, password, confirmPassword);
     }
@@ -93,7 +105,7 @@ const Account = () => {
     const handlePasswordChange = passwordInput => {
         if (passwordInput.length < 6) {
             setPasswordChange('Very weak - Please enter a stronger password.');
-            setError({ ...error, passwordError: '', confirmPasswordError: '' });
+            setError({ ...error, passwordError: 'Your pasword should be 6 characters long or more.', confirmPasswordError: '' });
             setUserInfo({ ...userInfo, password: '' });
         }
         else if (passwordInput.length <= 8) {
@@ -113,9 +125,6 @@ const Account = () => {
         if (confirmPasswordInput === '') {
             setError({ ...error, confirmPasswordError: 'You need to confirm your password.' });
         }
-        else if (confirmPasswordInput !== userInfo.password) {
-            setError({ ...error, confirmPasswordError: "Password don't match" });
-        }
         else {
             setError({ ...error, confirmPasswordError: '' });
             setUserInfo({ ...userInfo, confirmPassword: confirmPasswordInput });
@@ -129,7 +138,6 @@ const Account = () => {
                 <p className='text-center text-white'><span className='hover:underline'><Link to='/'>Home</Link></span> / My account</p>
             </div>
             {
-
                 errorMessage &&
                 <div className="alert alert-warning bg-yellow-700 rounded-none text-white text-sm shadow-lg w-5/6 mx-auto mt-10">
                     <div>
