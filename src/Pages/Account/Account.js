@@ -5,7 +5,7 @@ import Register from './Register';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { BiErrorCircle } from 'react-icons/bi';
 import { toast } from 'react-hot-toast';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
 import app from '../../Firebase/firebase.init';
 
 
@@ -84,7 +84,7 @@ const Account = () => {
             .then(userCredential => {
                 const user = userCredential.user;
                 console.log(user);
-                toast.success('User Logged in successfully.', { id: 102 });
+                toast.success('User logged in successfully.', { id: 102 });
             })
             .catch(error => {
                 console.error(error)
@@ -108,6 +108,23 @@ const Account = () => {
         updateProfile(auth.currentUser, { displayName: name })
             .then(() => { })
             .catch(() => { })
+    }
+
+    const handleForgetPassword = () => {
+        sendPasswordResetEmail(auth, userInfo.email)
+            .then(() => {
+                toast.success('Sent password reset email. Please check your email.', { id: 103 });
+            })
+            .catch((error) => {
+                console.error(error);
+                const errorMessage = error.message;
+                if (errorMessage.includes('auth/missing-email')) {
+                    setError({ ...error, passwordError: 'Please enter your email address. You will receive a link to create a new password via email.' });
+                }
+                if (errorMessage.includes('auth/user-not-found')) {
+                    setError({ ...error, emailError: 'Unknown email address. Check again or try with your email.' });
+                }
+            })
     }
 
     //registration and login form input field validation
@@ -227,6 +244,7 @@ const Account = () => {
                                 handleLogin={handleLogin}
                                 handleEmailBlur={handleEmailBlur}
                                 loginHandlePasswordBlur={loginHandlePasswordBlur}
+                                handleForgetPassword={handleForgetPassword}
                             ></Login>
                             :
                             <Register

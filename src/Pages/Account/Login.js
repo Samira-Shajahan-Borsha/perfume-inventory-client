@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Login = ({ handleLogin, handleEmailBlur, loginHandlePasswordBlur }) => {
+const Login = ({ handleLogin, handleEmailBlur, loginHandlePasswordBlur, handleForgetPassword }) => {
 
     return (
         < div className="lg:w-1/2 w-full lg:mr-8">
@@ -19,7 +19,7 @@ const Login = ({ handleLogin, handleEmailBlur, loginHandlePasswordBlur }) => {
                     </label>
                     <input onBlur={event => loginHandlePasswordBlur(event.target.value)} name='password' type="password" placeholder="Password" className="input input-bordered rounded text-sm" />
                     <label className="label">
-                        <Link to='' className="label-text-alt link link-hover"><span className='hover:text-yellow-700'>Forgot password?</span></Link>
+                        <Link className="label-text-alt link link-hover"><span onClick={handleForgetPassword} className='hover:text-yellow-700'>Forgot password?</span></Link>
                     </label>
                 </div>
                 <div className="form-control mt-3">
