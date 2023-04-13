@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../Assets/Logo/logo.png';
-import { RxAvatar } from 'react-icons/rx';
 import { AuthContext } from '../../../Contexts/AuthProvider';
+import { RxAvatar } from 'react-icons/rx';
+import { IoMdSettings } from 'react-icons/io';
 
 const Navbar = () => {
 
@@ -53,6 +54,34 @@ const Navbar = () => {
                 <div className="navbar-end flex items-center">
                     {
                         user?.uid ?
+                            < div className="dropdown dropdown-end flex">
+                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar online">
+                                    <div className="w-10 lg:w-12 rounded-full ">
+                                        {
+                                            user?.photoURL ?
+                                                <img src={user?.photoURL} alt='profile-pic' />
+                                                :
+                                                <span className="text-xl">{user?.displayName.charAt(0).toUpperCase()}</span>
+                                        }
+                                    </div>
+                                </label>
+                                <ul tabIndex={0} className="mt-12 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-none w-52">
+                                    <li>
+                                        <Link>
+                                            <img src={user?.photoURL} alt='profile-pic' className='w-8 lg:w-10 rounded-full' />
+                                            <span>{user?.displayName}</span>
+                                        </Link>
+                                    </li>
+                                    <li><Link>Settings & privacy</Link></li>
+                                    <li onClick={handleLogOut}><Link>Log Out</Link></li>
+                                </ul>
+                            </div>
+
+                            :
+                            < Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
+                    }
+                    {/* {
+                        user?.uid ?
                             <>
                                 {
                                     user?.photoURL ?
@@ -75,7 +104,7 @@ const Navbar = () => {
                             </>
                             :
                             < Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
-                    }
+                    } */}
                 </div>
             </div>
         </div >
