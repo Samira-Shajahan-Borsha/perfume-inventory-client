@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 
 const SocailLogin = () => {
 
-    const { googleLogin } = useContext(AuthContext);
+    const { googleLogin, facebookLogin } = useContext(AuthContext);
 
     const handleGoogleLogin = () => {
         googleLogin()
@@ -13,6 +13,19 @@ const SocailLogin = () => {
                 const user = result.user;
                 console.log(user);
                 toast.success('Log in successful with google.', { id: 104 });
+            })
+            .catch(error => {
+                if (error.code === 'auth/popup-closed-by-user' || 'auth/cancelled-popup-request') {
+                    return;
+                }
+            })
+    }
+
+    const handleFacebookLogin = () => {
+        facebookLogin()
+            .then(result => {
+                const user = result.user;
+                console.log(user);
             })
             .catch(error => {
                 console.error(error);
@@ -31,6 +44,7 @@ const SocailLogin = () => {
                 <FaGooglePlusG className='text-xl mr-4'></FaGooglePlusG>Google
             </button>
             <button
+                onClick={handleFacebookLogin}
                 className="btn btn-active px-[69px] btn-ghost border-0 rounded-none text-lg normal-case font-normal hover:bg-zinc-200"
             ><FaFacebookF className='text-xl mr-4'></FaFacebookF>Facebook
             </button>
