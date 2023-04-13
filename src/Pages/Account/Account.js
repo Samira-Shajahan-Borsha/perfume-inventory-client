@@ -14,7 +14,7 @@ const auth = getAuth(app);
 
 const Account = () => {
 
-    const { createUser, logInUser } = useContext(AuthContext);
+    const { createUser, logInUser, setUser } = useContext(AuthContext);
 
     const [toggleButton, setToggleButton] = useState(true);
 
@@ -58,6 +58,7 @@ const Account = () => {
             createUser(email, password)
                 .then(userCredential => {
                     const user = userCredential.user;
+                    setUser(user);
                     console.log(user);
                     setPasswordChange('');
                     updateUserProfile(name);
@@ -84,6 +85,7 @@ const Account = () => {
         logInUser(email, password)
             .then(userCredential => {
                 const user = userCredential.user;
+                setUser(user);
                 console.log(user);
                 toast.success('User log in successful.', { id: 102 });
             })

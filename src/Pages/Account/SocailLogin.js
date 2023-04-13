@@ -25,6 +25,7 @@ const SocailLogin = () => {
         facebookLogin()
             .then(result => {
                 const user = result.user;
+                toast.success('Log in successful with google.', { id: 105 });
                 console.log(user);
             })
             .catch(error => {

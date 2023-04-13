@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../Assets/Logo/logo.png';
 import { RxAvatar } from 'react-icons/rx';
+import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
 
     const activeRoute = ({ isActive }) => isActive ? "text-yellow-700 underline decoration-yellow-700 decoration-2 underline-offset-4" : "text-black hover:underline decoration-2 underline-offset-4";
 
@@ -17,6 +20,12 @@ const Navbar = () => {
         </li>
         <li><NavLink to='/my/items' className={activeRoute}>My Items</NavLink></li>
     </>
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(() => { })
+    }
 
     return (
         <div className="navbar shadow-xl">
@@ -36,14 +45,40 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="flex px-1 w-80 justify-evenly">
-                        {menuItem}
+                        {
+                            menuItem
+                        }
                     </ul>
                 </div>
-                <div className="navbar-end flex">
-                    <Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
+                <div className="navbar-end flex items-center">
+                    {
+                        user?.uid ?
+                            <>
+                                {
+                                    user?.photoURL ?
+                                        < div className="avatar online mr-2">
+                                            <div className="w-8 lg:w-12 rounded-full">
+                                                <img src={user?.photoURL} alt='profile-pic' />
+                                            </div>
+                                        </div>
+                                        :
+                                        <div className="avatar online placeholder mr-2">
+                                            <div className="bg-neutral-focus text-neutral-content rounded-full w-8 lg:w-12">
+                                                <span className="text-xl">{user?.displayName.charAt(0).toUpperCase()}</span>
+                                            </div>
+                                        </div>
+                                }
+                                <button
+                                    onClick={handleLogOut}
+                                    className="btn btn-ghost normal-case font-semibold"
+                                >Log Out</button>
+                            </>
+                            :
+                            < Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
+                    }
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
