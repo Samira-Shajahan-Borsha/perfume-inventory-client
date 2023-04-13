@@ -87,6 +87,7 @@ const Account = () => {
                 const user = userCredential.user;
                 setUser(user);
                 console.log(user);
+                form.reset();
                 toast.success('User log in successful.', { id: 102 });
             })
             .catch(error => {

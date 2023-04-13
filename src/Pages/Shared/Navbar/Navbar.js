@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from '../../../Assets/Logo/logo.png';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import { RxAvatar } from 'react-icons/rx';
-import { IoMdSettings } from 'react-icons/io';
 
 const Navbar = () => {
 
@@ -55,20 +54,35 @@ const Navbar = () => {
                     {
                         user?.uid ?
                             < div className="dropdown dropdown-end flex">
-                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar online">
-                                    <div className="w-10 lg:w-12 rounded-full ">
-                                        {
-                                            user?.photoURL ?
-                                                <img src={user?.photoURL} alt='profile-pic' />
-                                                :
-                                                <span className="text-xl">{user?.displayName.charAt(0).toUpperCase()}</span>
-                                        }
-                                    </div>
+                                <label tabIndex={0} className="btn btn-ghost btn-circle">
+                                    {
+                                        user?.photoURL ?
+                                            < div className="avatar online">
+                                                <div className="w-10 lg:w-12 rounded-full">
+                                                    <img src={user?.photoURL} alt='profile-pic' />
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="avatar online placeholder">
+                                                <div className="bg-neutral-focus text-neutral-content rounded-full w-10 lg:w-12">
+                                                    <span className="text-xl">{user?.displayName?.charAt(0).toUpperCase()}</span>
+                                                </div>
+                                            </div>
+                                    }
                                 </label>
                                 <ul tabIndex={0} className="mt-12 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-none w-52">
                                     <li>
                                         <Link>
-                                            <img src={user?.photoURL} alt='profile-pic' className='w-8 lg:w-10 rounded-full' />
+                                            {
+                                                user?.photoURL ?
+                                                    <img src={user?.photoURL} alt='profile-pic' className='w-8 lg:w-10 rounded-full' />
+                                                    :
+                                                    <div className="avatar placeholder">
+                                                        <div className="bg-neutral-focus text-neutral-content rounded-full w-8 lg:w-10">
+                                                            <span className="text-xl">{user?.displayName?.charAt(0).toUpperCase()}</span>
+                                                        </div>
+                                                    </div>
+                                            }
                                             <span>{user?.displayName}</span>
                                         </Link>
                                     </li>
@@ -80,31 +94,6 @@ const Navbar = () => {
                             :
                             < Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
                     }
-                    {/* {
-                        user?.uid ?
-                            <>
-                                {
-                                    user?.photoURL ?
-                                        < div className="avatar online mr-2">
-                                            <div className="w-8 lg:w-12 rounded-full">
-                                                <img src={user?.photoURL} alt='profile-pic' />
-                                            </div>
-                                        </div>
-                                        :
-                                        <div className="avatar online placeholder mr-2">
-                                            <div className="bg-neutral-focus text-neutral-content rounded-full w-8 lg:w-12">
-                                                <span className="text-xl">{user?.displayName.charAt(0).toUpperCase()}</span>
-                                            </div>
-                                        </div>
-                                }
-                                <button
-                                    onClick={handleLogOut}
-                                    className="btn btn-ghost normal-case font-semibold"
-                                >Log Out</button>
-                            </>
-                            :
-                            < Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
-                    } */}
                 </div>
             </div>
         </div >
