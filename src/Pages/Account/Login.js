@@ -29,7 +29,8 @@ const Login = ({ handleLogin, handleEmailBlur, loginHandlePasswordBlur, handleFo
                     />
                     <button
                         onClick={() => setPasswordVisible(!passwordVisible)}
-                        className='absolute top-[52px] right-8'>
+                        className='absolute top-[52px] right-8'
+                    >
                         {
                             !passwordVisible ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
                         }

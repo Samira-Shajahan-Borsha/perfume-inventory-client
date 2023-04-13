@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Login from './Login';
-import Register from './Register';
+import { getAuth, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import app from '../../Firebase/firebase.init';
 import { BiErrorCircle } from 'react-icons/bi';
 import { toast } from 'react-hot-toast';
-import { getAuth, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
-import app from '../../Firebase/firebase.init';
+import Register from './Register';
+import Login from './Login';
+import SocailLogin from './SocailLogin';
 
 
 const auth = getAuth(app);
@@ -84,10 +85,9 @@ const Account = () => {
             .then(userCredential => {
                 const user = userCredential.user;
                 console.log(user);
-                toast.success('User logged in successfully.', { id: 102 });
+                toast.success('User log in successful.', { id: 102 });
             })
             .catch(error => {
-                console.error(error)
                 const errorMessage = error.message;
                 if (errorMessage.includes('auth/user-not-found')) {
                     setError({ ...error, emailError: 'Unknown email address. Check again or try with your email.' });
@@ -225,9 +225,9 @@ const Account = () => {
                     </div>
                 </div>
             }
-            <div className="hero py-9">
+            <div className="hero py-10 mb-8">
                 <div className="hero-content px-4 lg:px-28 flex-col items-start justify-evenly lg:flex-row-reverse">
-                    <div className="text-center lg:w-1/2 lg:text-left flex flex-col items-center ">
+                    <div className="text-center lg:w-1/2 lg:text-left flex flex-col items-center mb-4 lg:mb-0 ">
                         <h1 className="text-2xl font-bold">REGISTER</h1>
                         <p className="py-6 text-sm text-center leading-6">Registering for this site allows you to access the manage inventory. Just fill in the fields below, and we'll get a new account set up for you in no time. We will only ask you for information necessary to manage the perfume inventory.</p>
                         <button className="btn btn-active btn-ghost font-normal rounded-none"
@@ -237,6 +237,8 @@ const Account = () => {
                                 toggleButton ? 'REGISTER' : 'LOGIN'
                             }
                         </button>
+                        <p className='mt-3 text-sm'>Or, {toggleButton ? 'login' : 'register'} with</p>
+                        <SocailLogin></SocailLogin>
                     </div>
                     {
                         toggleButton ?
