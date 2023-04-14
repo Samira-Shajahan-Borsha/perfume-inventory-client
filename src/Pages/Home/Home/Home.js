@@ -5,7 +5,7 @@ import Offer from '../Offer/Offer';
 
 const Home = () => {
     return (
-        <div>
+        <div className='bg-yellow-50'>
             <Banner></Banner>
             <Offer></Offer>
             <Category></Category>

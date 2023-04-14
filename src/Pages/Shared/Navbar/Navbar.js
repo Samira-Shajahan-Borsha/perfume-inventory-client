@@ -35,9 +35,12 @@ const Navbar = () => {
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                         </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                            {menuItem}
-                        </ul>
+                        {
+                            user?.uid &&
+                            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                                {menuItem}
+                            </ul>
+                        }
                     </div>
                     <Link to='/' className="normal-case text-xl text-black flex items-center">
                         <img className='w-52 lg:w-72' src={logo} alt="" />
@@ -46,6 +49,7 @@ const Navbar = () => {
                 <div className="navbar-center hidden lg:flex">
                     <ul className="flex px-1 w-80 justify-evenly">
                         {
+                            user?.uid &&
                             menuItem
                         }
                     </ul>
@@ -92,7 +96,9 @@ const Navbar = () => {
                             </div>
 
                             :
-                            < Link to='/account' className='flex w-24 items-center'><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></Link>
+                            < Link to='/account' className='flex w-24 items-center'>
+                                <button className="btn btn-active  btn-ghost hover:bg-zinc-200 border-0 rounded-none normal-case font-normal"><RxAvatar className='text-2xl mr-1 text-black '></RxAvatar><span>Log In</span></button>
+                            </Link>
                     }
                 </div>
             </div>

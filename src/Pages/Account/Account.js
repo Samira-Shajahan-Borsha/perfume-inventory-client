@@ -205,8 +205,8 @@ const Account = () => {
     }
 
     return (
-        <div>
-            <div className='bg-black h-44'>
+        <div className='bg-yellow-50'>
+            <div className='bg-black h-44 '>
                 <h1 className='text-4xl md:text-6xl lg:text-6xl font-semibold text-white py-8 text-center'>My account</h1>
                 <p className='text-center text-white'><span className='hover:underline'><Link to='/'>Home</Link></span> / My account</p>
             </div>
