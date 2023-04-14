@@ -23,13 +23,13 @@ const AddItem = () => {
                                         <label className="label">
                                             <span className="label-text">Perfume Name</span>
                                         </label>
-                                        <input type="text" name="name" placeholder='Perfume name' id="input" class="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" />
+                                        <input type="text" name="name" placeholder='Perfume name' id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" />
                                     </div>
                                     <div className="form-control w-full lg:w-5/12">
                                         <label className="label">
                                             <span className="label-text">Email</span>
                                         </label>
-                                        <input type="text" name="email" defaultValue={user?.email} id="input" class="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required readOnly />
+                                        <input type="text" name="email" defaultValue={user?.email} id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required readOnly />
                                     </div>
                                 </div>
                                 <div className="lg:flex w-full justify-evenly">
@@ -37,13 +37,13 @@ const AddItem = () => {
                                         <label className="label">
                                             <span className="label-text">Image URL</span>
                                         </label>
-                                        <input type="text" name="imageURL" placeholder='Perfume image URL' id="input" class="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
+                                        <input type="text" name="imageURL" placeholder='Perfume image URL' id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
                                     </div>
                                     <div className="form-control w-full lg:w-5/12">
                                         <label className="label">
                                             <span className="label-text">Price</span>
                                         </label>
-                                        <input type="number" name="price" placeholder='Price' id="input" class="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
+                                        <input type="number" name="price" placeholder='Price' id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
                                     </div>
                                 </div>
                                 <div className="lg:flex w-full justify-evenly">
@@ -51,13 +51,13 @@ const AddItem = () => {
                                         <label className="label">
                                             <span className="label-text">Quantity</span>
                                         </label>
-                                        <input type="number" name="quantity" placeholder='Quantity' id="input" class="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
+                                        <input type="number" name="quantity" placeholder='Quantity' id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
                                     </div>
                                     <div className="form-control w-full lg:w-5/12">
                                         <label className="label">
                                             <span className="label-text">Supplier Name</span>
                                         </label>
-                                        <input type="text" name="supplierName" placeholder='Supplier name' id="input" class="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
+                                        <input type="text" name="supplierName" placeholder='Supplier name' id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
                                     </div>
                                 </div>
                                 <div className="form-control w-2/3">
