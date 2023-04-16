@@ -16,7 +16,11 @@ function App() {
   return (
     <div className='text-black'>
       <RouterProvider router={router}></RouterProvider>
-      <Toaster />
+      <Toaster toastOptions={{
+        style: {
+          marginTop: '70px'
+        },
+      }} />
     </div>
   );
 }
