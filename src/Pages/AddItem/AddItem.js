@@ -3,6 +3,7 @@ import { FaArrowLeft, FaExclamationCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { useTitle } from '../../Hooks/useTitle';
 
 const AddItem = () => {
 
@@ -21,6 +22,8 @@ const AddItem = () => {
         priceError: '',
         quantityError: ''
     });
+
+    useTitle('Add Perfume');
 
     const handleAddItem = event => {
         event.preventDefault();
@@ -43,8 +46,6 @@ const AddItem = () => {
             supplierName,
             description
         };
-
-        console.log(item);
 
         fetch('http://localhost:5000/add/item', {
             method: 'POST',

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, sendPasswordResetEmail, updateProfile } from 'firebase/auth';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import app from '../../Firebase/firebase.init';
@@ -8,6 +8,7 @@ import { toast } from 'react-hot-toast';
 import Register from './Register';
 import Login from './Login';
 import SocailLogin from './SocailLogin';
+import { useTitle } from '../../Hooks/useTitle';
 
 
 const auth = getAuth(app);
@@ -19,6 +20,10 @@ const Account = () => {
     const [toggleButton, setToggleButton] = useState(true);
 
     const [passwordChange, setPasswordChange] = useState('');
+
+    const navigate = useNavigate();
+
+    useTitle('Account');
 
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -88,6 +93,7 @@ const Account = () => {
                 setUser(user);
                 console.log(user);
                 form.reset();
+                navigate('/');
                 toast.success('User log in successful.', { id: 102 });
             })
             .catch(error => {

@@ -2,16 +2,20 @@ import React, { useContext } from 'react';
 import { FaFacebookF, FaGooglePlusG } from 'react-icons/fa';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const SocailLogin = () => {
 
     const { googleLogin, facebookLogin } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate('/');
                 toast.success('Log in successful with google.', { id: 104 });
             })
             .catch(error => {
@@ -25,6 +29,7 @@ const SocailLogin = () => {
         facebookLogin()
             .then(result => {
                 const user = result.user;
+                navigate('/');
                 toast.success('Log in successful with google.', { id: 105 });
                 console.log(user);
             })
