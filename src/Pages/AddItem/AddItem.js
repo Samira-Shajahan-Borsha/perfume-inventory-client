@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { FaArrowLeft, FaExclamationCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const AddItem = () => {
 
@@ -33,10 +34,35 @@ const AddItem = () => {
         const supplierName = form.supplierName.value;
         const description = form.description.value;
 
+        const item = {
+            perfumeName,
+            email,
+            imageURL,
+            price,
+            quantity,
+            supplierName,
+            description
+        };
 
-        console.log(perfumeName, email, imageURL, price, quantity, supplierName, description);
+        console.log(item);
 
-
+        fetch('http://localhost:5000/add/item', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(item)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    toast.success('Congratulations! The item has been successfully added.', {
+                        icon: '👏',
+                    });
+                    form.reset();
+                }
+            })
     }
 
     const handlePriceBlur = priceInput => {
@@ -58,7 +84,6 @@ const AddItem = () => {
             setError({ ...error, quantityError: '' });
         }
     }
-
 
     return (
         <div className='py-10 bg-yellow-50'>
@@ -106,7 +131,7 @@ const AddItem = () => {
                                         </label>
                                         <input onBlur={event => handlePriceBlur(event.target.value)} type="number" name="price" placeholder='Price' id="input" className="block rounded-none border-solid border-2 py-2 px-4 border-gray-200 focus:border-yellow-600 text-sm focus:outline-none" required />
                                         {
-                                            error?.priceError && <p className='flex mt-1 ml-2 text-sm items-center text-red-600'><FaExclamationCircle className='mr-1'></FaExclamationCircle>{error?.quantityError}</p>
+                                            error?.priceError && <p className='flex mt-1 ml-2 text-sm items-center text-red-600'><FaExclamationCircle className='mr-1'></FaExclamationCircle>{error?.priceError}</p>
                                         }
                                     </div>
                                     <div className="form-control w-full lg:w-5/12 ">
