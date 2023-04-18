@@ -7,9 +7,9 @@ import { useTitle } from '../../../Hooks/useTitle';
 const Home = () => {
 
     useTitle('Home');
-    
+
     return (
-        <div className='bg-yellow-50'>
+        <div className='bg-yellow-50 py-16 lg:py-[77px]'>
             <Banner></Banner>
             <Offer></Offer>
             <Category></Category>

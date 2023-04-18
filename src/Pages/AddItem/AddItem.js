@@ -87,7 +87,7 @@ const AddItem = () => {
     }
 
     return (
-        <div className='py-10 bg-yellow-50'>
+        <div className=' py-24 lg:py-32 bg-yellow-50'>
             <Link to='/manage/inventory' className='lg:ml-24 ml-3 mb-8 flex w-64 items-center hover:text-yellow-700'>
                 <FaArrowLeft className='w-10'></FaArrowLeft> Go Back to Manage Inventory
             </Link>
