@@ -17,7 +17,7 @@ const ManageInventory = () => {
         <div className='py-24 lg:py-32 bg-yellow-50'>
             <h1 className='text-center text-2xl font-semibold mb-4'>Manage Perfume Inventory</h1>
             <div className="container mx-auto w-11/12 overflow-x-auto">
-                <table className="table container mx-auto w-full lg:w-11/12 rounded-none">
+                <table className="table container mx-auto w-full lg:w-11/12">
                     <thead>
                         <tr>
                             <th className='z-[0]'></th>

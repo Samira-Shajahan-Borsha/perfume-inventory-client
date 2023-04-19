@@ -1,8 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+
+
+const customStyles = {
+    content: {
+        top: '30%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '400px',
+        borderRadius: 'none'
+    },
+};
 
 const TableRow = ({ perfume, index }) => {
 
     const { _id, perfumeName, imageURL, supplierName, price, quantity } = perfume;
+    
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
 
     return (
         <tr>
@@ -27,7 +57,23 @@ const TableRow = ({ perfume, index }) => {
             </td>
             <td>${price}</td>
             <th>
-                <button className="btn bg-black hover:bg-black rounded-none btn-xs font-normal md:btn-sm lg:btn-sm">Delete</button>
+                <div>
+                    <button onClick={openModal} className="btn bg-black hover:bg-black rounded-none btn-xs font-normal md:btn-sm lg:btn-sm">Delete</button>
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onAfterOpen={afterOpenModal}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+                        <h2 className='text-black font-bold'>Do you want to delete this item?</h2>
+                        <div className="flex justify-end">
+                            <button onClick={closeModal} className="btn btn-sm btn-ghost mr-1">No</button>
+                            <button onClick={closeModal} className="btn btn-sm bg-black hover:bg-black">Yes</button>
+                        </div>
+                    </Modal>
+                </div>
+                {/* <button className="btn bg-black hover:bg-black rounded-none btn-xs font-normal md:btn-sm lg:btn-sm">Delete</button> */}
             </th>
         </tr>
     );
