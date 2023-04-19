@@ -25,8 +25,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/manage/inventory',
-                element: <ManageInventory></ManageInventory>,
-                loader: async () => fetch('http://localhost:5000/perfumes')
+                element: <ManageInventory></ManageInventory>
             }
         ]
     }

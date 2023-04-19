@@ -15,10 +15,12 @@ const customStyles = {
     },
 };
 
-const TableRow = ({ perfume, index }) => {
+Modal.setAppElement('#root');
+
+const TableRow = ({ perfume, index, handleDeleteItem }) => {
 
     const { _id, perfumeName, imageURL, supplierName, price, quantity } = perfume;
-    
+
     const [modalIsOpen, setIsOpen] = useState(false);
 
     function openModal() {
@@ -32,7 +34,6 @@ const TableRow = ({ perfume, index }) => {
     function closeModal() {
         setIsOpen(false);
     }
-
 
     return (
         <tr>
@@ -69,7 +70,13 @@ const TableRow = ({ perfume, index }) => {
                         <h2 className='text-black font-bold'>Do you want to delete this item?</h2>
                         <div className="flex justify-end">
                             <button onClick={closeModal} className="btn btn-sm btn-ghost mr-1">No</button>
-                            <button onClick={closeModal} className="btn btn-sm bg-black hover:bg-black">Yes</button>
+                            <button
+                                onClick={() => {
+                                    handleDeleteItem(_id);
+                                    closeModal();
+                                }}
+                                className="btn btn-sm bg-black hover:bg-black"
+                            >Yes</button>
                         </div>
                     </Modal>
                 </div>
