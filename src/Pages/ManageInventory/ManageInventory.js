@@ -14,6 +14,8 @@ const ManageInventory = () => {
 
     console.log(perfumes);
 
+    // const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
+
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:5000/perfumes')
@@ -24,32 +26,28 @@ const ManageInventory = () => {
             })
     }, []);
 
-    const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
-
     useTitle('Manage Inventory');
 
     const handleDeleteItem = id => {
         console.log(id);
-        setIsDeleteConfirmed(true);
-        if (isDeleteConfirmed) {
-            const url = `http://localhost:5000/perfume/${id}`;
-            console.log(url)
-            fetch(url, {
-                method: 'DELETE'
+        // setIsDeleteConfirmed(true);
+        const url = `http://localhost:5000/perfume/${id}`;
+        console.log(url)
+        fetch(url, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    const remainingItems = perfumes.filter(perfume => perfume._id !== id)
+                    setPerfumes(remainingItems);
+                }
             })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                    if (data.deletedCount > 0) {
-                        const remainingItems = perfumes.filter(perfume => perfume._id !== id)
-                        setPerfumes(remainingItems);
-                    }
-                })
-        }
     }
 
     return (
-        <div className='py-24 lg:py-32 bg-yellow-50'>
+        <div className='py-24 lg:py-32 bg-yellow-50 min-h-screen'>
             {
                 (perfumes.length === 0 && loading) ?
                     < div className='h-screen flex justify-center items-center' >
@@ -62,14 +60,14 @@ const ManageInventory = () => {
                     <div>
                         {
                             perfumes.length === 0 ?
-                                <>
+                                <div>
                                     <h1 className='text-center text-2xl font-semibold mb-4'>You don't have any items to show </h1>
                                     <div className='flex justify-center mt-8'>
                                         <Link to='/add/item' className='flex w-64 items-center hover:text-yellow-700'>
                                             <FaArrowLeft className='w-10'></FaArrowLeft> Want to Add Perfume
                                         </Link>
                                     </div>
-                                </>
+                                </div>
                                 :
                                 <>
                                     <h1 className='text-center text-2xl font-semibold mb-4'>Manage Perfume Inventory</h1>

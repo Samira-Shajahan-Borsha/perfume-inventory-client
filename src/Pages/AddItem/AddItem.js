@@ -56,7 +56,7 @@ const AddItem = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 if (data.acknowledged) {
                     toast.success('Congratulations! The item has been successfully added.', {
                         icon: '👏',
